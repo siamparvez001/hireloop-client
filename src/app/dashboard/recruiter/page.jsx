@@ -2,7 +2,7 @@
 import React from 'react';
 import { useSession } from '@/lib/auth-client';
 import { FiFileText, FiUsers, FiZap, FiCheckCircle } from "react-icons/fi";
-// import StatsGrid from "./components/StatsGrid";
+
 import DashboardStats from '@/components/dashboard/DashboardStats';
 const RecruiterDashboardHomePage = () => {
 
@@ -12,7 +12,7 @@ const RecruiterDashboardHomePage = () => {
         return <div className="flex items-center justify-center h-full">Loading...</div>
     }
 
-    // React Icons-এর কম্পোনেন্ট রেফারেন্স এখানে দেওয়া হয়েছে
+    
     const recruiterStats = [
         { id: 1, title: "Total Job Posts", value: "48", icon: FiFileText },
         { id: 2, title: "Total Applicants", value: "1,284", icon: FiUsers },

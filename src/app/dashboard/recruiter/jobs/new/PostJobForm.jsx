@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 
-// Importing React Icons (Heroicons v2 & Feather Icons)
+
 import {
     HiBriefcase,
     HiRectangleStack,
@@ -18,21 +18,14 @@ import { FiTrendingUp, FiGift } from "react-icons/fi";
 import { Button, Form, toast } from "@heroui/react";
 import { createJob } from "@/lib/actions/jobs";
 import { redirect, useRouter } from "next/navigation";
-// import { redirect } from "next/dist/server/api-utils";
+
 
 const PostJobForm = ({ company }) => {
-    // console.log("Company data in PostJobForm:", company);
-    // const router = useRouter();
-    // Remote state control
+    
     const [isRemote, setIsRemote] = useState(false);
     const [errors, setErrors] = useState({});
 
-    // Mock auto-filled company data if not passed via props
-    // const company = company || {
-    //     name: "Avenzo BD",
-    //     logo: "https://via.placeholder.com/40",
-    //     isApproved: true,
-    // };
+    
 
     const jobTypes = [
         { label: "Full-time", value: "full-time" },
@@ -45,11 +38,7 @@ const PostJobForm = ({ company }) => {
         e.preventDefault();
         const data = Object.fromEntries(new FormData(e.currentTarget));
 
-        // if(!company.isApproved) {
-        //     toast.error("Your company is not approved yet. Please wait for approval before posting jobs.");
-        //     return;
-        // }
-        // Client-side validation
+        
         let newErrors = {};
         if (!data.jobTitle) newErrors.jobTitle = "Job Title is required";
         if (!data.jobCategory) newErrors.jobCategory = "Job Category is required";

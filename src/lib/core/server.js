@@ -16,7 +16,4 @@ export const serverMutation = async (path, data) => {
             body: JSON.stringify(data),
         });
         return res.json();
-    
-        
-    
-}
+} 

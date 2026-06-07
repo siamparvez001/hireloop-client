@@ -16,7 +16,6 @@ const Page = async ({ params }) => {
     const { id } = await params;
     const job = await getJobById(id);
 
-    // ডেটা না পাওয়া গেলে ক্র্যাশ এড়ানোর জন্য সেফটি গার্ড
     if (!job) {
         return (
             <div className="min-h-screen bg-black text-white flex items-center justify-center">

@@ -1,6 +1,6 @@
 import React from "react";
 import { TextField, InputGroup, Select, ListBox } from "@heroui/react";
-// Gravity Icons পরিবর্তন করে React Icons ব্যবহার করা হয়েছে
+
 import { FiSearch, FiChevronDown } from "react-icons/fi";
 
 export default function JobFilters({

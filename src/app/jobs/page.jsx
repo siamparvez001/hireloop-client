@@ -5,7 +5,7 @@ import { getJobs } from "@/lib/api/jobs";
 
 
 export default async function Page() {
-  // Fetched server-side on the initial request
+ 
   const jobs = await getJobs();
 
   return (
