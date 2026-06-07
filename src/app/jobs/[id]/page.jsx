@@ -1,6 +1,6 @@
 import { getJobById } from '@/lib/api/jobs';
 import React from 'react';
-import { Card, Button, Avatar, Chip } from "@heroui/react";
+import { Card, Button, Avatar, Chip, Link } from "@heroui/react";
 import {
     FiMapPin,
     FiBriefcase,
@@ -40,7 +40,7 @@ const Page = async ({ params }) => {
         companyLogo = "",
     } = job;
 
-    // স্যালারি ফরম্যাটার
+
     const formatSalary = (min, max, curr) => {
         if (!min || !max) return "Negotiable";
         const minK = parseInt(min) / 1000;
@@ -48,7 +48,7 @@ const Page = async ({ params }) => {
         return `${minK}k–${maxK}k ${curr} / year`;
     };
 
-    // কমা দিয়ে আলাদা করা স্ট্রিংগুলোকে অ্যারেতে রূপান্তর করার ফাংশন
+
     const parseList = (text) => text ? text.split(",").map((item) => item.trim()) : [];
 
     return (
@@ -86,12 +86,12 @@ const Page = async ({ params }) => {
                         </div>
 
                         {/* Apply Button (Header) */}
-                        <Button
-                            className="bg-purple-600 hover:bg-purple-700 text-white font-semibold h-12 px-6 rounded-xl transition-all shadow-lg shadow-purple-600/20 flex-shrink-0"
-                            endContent={<FiArrowRight className="text-lg" />}
+                        <Link
+                            href={`/jobs/${id}/apply`}
+                            className="bg-purple-600 hover:bg-purple-700 text-white font-semibold h-12 px-8 rounded-xl transition-all shadow-lg shadow-purple-600/20"
                         >
-                            Apply Now
-                        </Button>
+                            Apply Now <FiArrowRight className="ml-2" />
+                        </Link>
                     </Card.Header>
 
                     {/* Quick Meta Badges */}
@@ -177,11 +177,12 @@ const Page = async ({ params }) => {
                 {/* 3. BOTTOM ACTION BAR */}
                 <div className="flex items-center justify-between border-t border-zinc-800 pt-6">
                     <span className="text-xs text-zinc-500">Job ID: {id}</span>
-                    <Button
+                    <Link
+                        href={`/jobs/${id}/apply`}
                         className="bg-purple-600 hover:bg-purple-700 text-white font-semibold h-12 px-8 rounded-xl transition-all shadow-lg shadow-purple-600/20"
                     >
-                        Apply Now
-                    </Button>
+                        Apply For This Job
+                    </Link>
                 </div>
 
             </div>
