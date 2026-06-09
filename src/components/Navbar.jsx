@@ -15,7 +15,7 @@ import { Button } from "@heroui/react";
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { data: session, isPending } = useSession();
-    console.log("Session data:", session, "Is pending:", isPending);
+    // console.log("Session data:", session, "Is pending:", isPending);
     const user = session?.user;
     const handleSignOut = async() => {
         await signOut();
@@ -33,11 +33,26 @@ const Navbar = () => {
             icon: <Building2 size={18} />,
         },
         {
-            name: "Dashboard",
-            href: "/dashboard",
+            name: "Pricing",
+            href: "/plans",
             icon: <LayoutDashboard size={18} />,
         },
     ];
+
+    const dashboardLinks = {
+        seeker : '/dashboard/seeker',
+        recruiter : '/dashboard/recruiter'
+    }
+
+    if(user?.email){
+        navLinks.push(
+            {
+                name: 'Dashboard',
+                href: dashboardLinks[user?.role || 'seeker'],
+                icon: <LayoutDashboard size={18} />
+            }
+        )
+    }
 
 
 

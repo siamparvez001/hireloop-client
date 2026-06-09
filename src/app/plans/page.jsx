@@ -43,7 +43,7 @@ const PricingPage = () => {
         {
             name: 'Pro',
             id: 'seeker_pro',
-            price: '$19',
+            price: '$2',
             period: '/month',
             description: 'Our most popular option for serious active candidates looking to rapidly accelerate landing a role.',
             icon: <FaStar className="w-5 h-5 text-blue-400" />,
@@ -251,10 +251,11 @@ const PricingPage = () => {
                                                 : 'bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700/50'
                                                 }`}
                                         >
-                                            {plan.cta}
+                                            Checkout
                                         </button>
                                     </section>
                                 </form>
+
                             </div>
                         </div>
                     ))}
