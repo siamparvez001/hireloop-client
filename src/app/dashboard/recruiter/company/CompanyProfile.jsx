@@ -89,7 +89,7 @@ export default function CompanyProfile({ recruiter, recruiterCompany }) {
             location: formData.get("location"),
             employeeCount: formData.get("employeeCount"),
             description: formData.get("description"),
-            status: company?.status || "Pending",
+            status: company && company.status ? company.status : "Pending",
             recruiterId: recruiter.id
         };
 
@@ -98,19 +98,27 @@ export default function CompanyProfile({ recruiter, recruiterCompany }) {
         console.log("Prepared Company Data for Submission:", newCompanyData);
 
         const payload = await createCompany(newCompanyData);
-        console.log("Submitting Company Data:", newCompanyData);
+        try {
+            const payload = await createCompany(newCompanyData);
 
-        if (payload.insertedId) {
-            toast.success("Company profile created successfully! Awaiting admin approval.");
-            // ✅ Update company with the returned ID from server
-            setCompany(prev => ({ ...prev, _id: payload.insertedId }));
+            if (payload?.insertedId) {
+                toast.success("Company profile created successfully!");
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error("Something went wrong");
         }
+
+        // if (payload.insertedId) {
+        //     toast.success("Company profile created successfully! Awaiting admin approval.");
+        //     // ✅ Update company with the returned ID from server
+        //     setCompany(prev => ({ ...prev, _id: payload.insertedId }));
+        // }
 
         setViewMode("view");
     };
-
     // ✅ FIX: Check if company is null/undefined, not _id
-    if (!company && viewMode !== "register") {
+    if (!company?.name && viewMode !== "register") {
         return (
             <div className="max-w-4xl mx-auto my-10 p-8 bg-[#161618] border border-[#262626] rounded-2xl text-center space-y-6">
                 <div className="w-16 h-16 bg-[#1c1c1e] border border-[#2d2d30] rounded-2xl flex items-center justify-center mx-auto shadow-md">
@@ -119,7 +127,7 @@ export default function CompanyProfile({ recruiter, recruiterCompany }) {
                 <div className="space-y-2">
                     <h2 className="text-xl font-semibold text-white tracking-tight">Your Company Is Not Registered Yet</h2>
                     <p className="text-zinc-400 text-sm max-w-md mx-auto leading-relaxed">
-                        It looks like you haven't set up your company workspace yet. To start posting corporate jobs, managing your core developer teams, and getting applicant features, please register your company first.
+                        It looks like you have nott set up your company workspace yet. To start posting corporate jobs, managing your core developer teams, and getting applicant features, please register your company first.
                     </p>
                 </div>
                 <div className="pt-2">
@@ -135,7 +143,7 @@ export default function CompanyProfile({ recruiter, recruiterCompany }) {
     }
 
     // --- STATE 2: VIEW MODE ---
-    if (viewMode === "view" && company) {
+    if (viewMode === "view" && company?.name) {
         return (
             <div className="max-w-4xl mx-auto my-10 p-6 md:p-8 bg-[#161618] border border-[#262626] rounded-2xl space-y-8">
                 {/* Profile Header Block */}

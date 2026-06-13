@@ -17,7 +17,7 @@ const Navbar = () => {
     const { data: session, isPending } = useSession();
     // console.log("Session data:", session, "Is pending:", isPending);
     const user = session?.user;
-    const handleSignOut = async() => {
+    const handleSignOut = async () => {
         await signOut();
     }
 
@@ -40,11 +40,12 @@ const Navbar = () => {
     ];
 
     const dashboardLinks = {
-        seeker : '/dashboard/seeker',
-        recruiter : '/dashboard/recruiter'
+        seeker: '/dashboard/seeker',
+        recruiter: '/dashboard/recruiter',
+        admin: '/dashboard/admin'
     }
 
-    if(user?.email){
+    if (user?.email) {
         navLinks.push(
             {
                 name: 'Dashboard',
@@ -105,20 +106,20 @@ const Navbar = () => {
                         {/* Auth Buttons */}
                         <div className="flex items-center gap-4">
                             {
-                                user ? 
-                                <>
-                                Hi, {user.name}
-                                <Button variant="ghost" onClick={handleSignOut}>
-                                    Sign Out
-                                </Button>
-                                </>
-                                :
-                                <Link
-                                href="/auth/signin"
-                                className="text-sm font-semibold text-violet-400 transition hover:text-violet-300"
-                            >
-                                Sign In
-                            </Link>}
+                                user ?
+                                    <>
+                                        Hi, {user.name}
+                                        <Button variant="ghost" onClick={handleSignOut}>
+                                            Sign Out
+                                        </Button>
+                                    </>
+                                    :
+                                    <Link
+                                        href="/auth/signin"
+                                        className="text-sm font-semibold text-violet-400 transition hover:text-violet-300"
+                                    >
+                                        Sign In
+                                    </Link>}
 
                             <Link
                                 href="/auth/signup"

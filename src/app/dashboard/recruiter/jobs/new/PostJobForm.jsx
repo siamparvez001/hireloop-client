@@ -21,11 +21,11 @@ import { redirect, useRouter } from "next/navigation";
 
 
 const PostJobForm = ({ company }) => {
-    
+
     const [isRemote, setIsRemote] = useState(false);
     const [errors, setErrors] = useState({});
 
-    
+
 
     const jobTypes = [
         { label: "Full-time", value: "full-time" },
@@ -38,7 +38,7 @@ const PostJobForm = ({ company }) => {
         e.preventDefault();
         const data = Object.fromEntries(new FormData(e.currentTarget));
 
-        
+
         let newErrors = {};
         if (!data.jobTitle) newErrors.jobTitle = "Job Title is required";
         if (!data.jobCategory) newErrors.jobCategory = "Job Category is required";
@@ -57,21 +57,21 @@ const PostJobForm = ({ company }) => {
         const payload = {
             ...data,
             isRemote,
-            companyId: company._id ,
+            companyId: company._id,
             companyName: company.name,
-            companyLogo: company.logo ,
+            companyLogo: company.logo,
             status: "active",
             createdAt: new Date().toISOString(),
             isPublicVisible: true,
         };
 
         const res = await createJob(payload);
-        if (res.success) {
+
+        if (res.insertedId) {
             toast.success("Job posted successfully!");
-            e.currentTarget.reset();
+            e.target.reset();
             setIsRemote(false);
-            
-            redirect("/dashboard/recruiter"); 
+            redirect("/dashboard/recruiter/jobs");
         }
     };
 
@@ -96,12 +96,21 @@ const PostJobForm = ({ company }) => {
                 </div>
                 <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                    Approved
+                    {company.status}
                 </div>
             </div>
 
+
+
+            {company.status !== 'Approved' &&
+                <div>
+                    <h2 className="text-red-500">Please wait to get approval</h2>
+                </div>
+            }
+
+
             {/* Form wrapper */}
-            <Form onSubmit={handleSubmit} validationErrors={errors} className="space-y-8">
+            {company.status === 'Approved' && <Form onSubmit={handleSubmit} validationErrors={errors} className="space-y-8">
 
                 {/* SECTION 1: JOB INFO */}
                 <div className="space-y-5">
@@ -225,7 +234,7 @@ const PostJobForm = ({ company }) => {
                                 <span className="text-sm font-medium text-white">Remote Position</span>
                                 <span className="text-xs text-[#a1a1aa]">This job can be done from anywhere</span>
                             </div>
-                            
+
                             {/* FIX: স্ক্রিনশটে থাকা "Remote" লেখার পাশে একদম রিয়েল ওয়ার্কিং টগল সুইচ বাটন */}
                             <label className="inline-flex items-center justify-center gap-3 cursor-pointer select-none group">
                                 <div className="relative">
@@ -237,13 +246,11 @@ const PostJobForm = ({ company }) => {
                                         className="sr-only" // মেইন ইনপুট হাইড থাকবে
                                     />
                                     {/* সুইচের ব্যাকগ্রাউন্ড ট্র্যাকবার */}
-                                    <div className={`w-11 h-6 rounded-full transition-colors duration-200 ease-in-out ${
-                                        isRemote ? "bg-white" : "bg-zinc-700"
-                                    }`}></div>
+                                    <div className={`w-11 h-6 rounded-full transition-colors duration-200 ease-in-out ${isRemote ? "bg-white" : "bg-zinc-700"
+                                        }`}></div>
                                     {/* সুইচের মুভিং গোল ডট/বাটন */}
-                                    <div className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-transform duration-200 ease-in-out shadow-sm ${
-                                        isRemote ? "translate-x-5 bg-black" : "bg-zinc-300"
-                                    }`}></div>
+                                    <div className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-transform duration-200 ease-in-out shadow-sm ${isRemote ? "translate-x-5 bg-black" : "bg-zinc-300"
+                                        }`}></div>
                                 </div>
                                 <span className="text-sm text-zinc-400 font-medium group-hover:text-white transition-colors">Remote</span>
                             </label>
@@ -335,7 +342,7 @@ const PostJobForm = ({ company }) => {
                     </Button>
                 </div>
 
-            </Form>
+            </Form>}
         </div>
     );
 };
